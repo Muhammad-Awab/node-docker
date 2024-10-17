@@ -1,38 +1,120 @@
 <!DOCTYPE html>
+<html lang="en">
 
-<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Shaandaar To-Do List</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
 
-    <head>
-        <title>My shaandaar todolist</title>
-        <style>
-            a {
-                text-decoration: none;
-                color: black;
-            }
+        h1 {
+            background-color: #4caf50;
+            color: white;
+            padding: 20px;
+            margin: 0;
+        }
 
-        </style>
-    </head>
+        ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 20px auto;
+            width: 50%;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
 
-    <body>
-        <h1>Best To_DO_App Best To_DO_App Best To_DO_App Best To_DO_App</h1>
-         <h1>Best To_DO_App Best To_DO_App Best To_DO_App Best To_DO_App</h1>
-        <ul>
-            <% todolist.forEach(function(todo, index) { %>
-            <li>
-                <a href="/todo/delete/<%= index %>">✘</a>
-                <a href="/todo/<%= index %>">✎</a>
+        li {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        li:last-child {
+            border-bottom: none;
+        }
+
+        a {
+            text-decoration: none;
+            color: #ff0000;
+            font-size: 18px;
+        }
+
+        a.edit {
+            color: #0000ff;
+            margin-right: 10px;
+        }
+
+        form {
+            margin: 20px auto;
+            width: 50%;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            font-size: 16px;
+            margin-right: 10px;
+        }
+
+        input[type="text"] {
+            padding: 8px;
+            width: 60%;
+            font-size: 16px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+        }
+
+        input[type="submit"] {
+            padding: 8px 15px;
+            font-size: 16px;
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>My Shaandaar To-Do List</h1>
+
+    <ul>
+        <% todolist.forEach(function(todo, index) { %>
+        <li>
+            <span>
+                <a class="edit" href="/todo/<%= index %>">✎</a>
                 <%- todo %>
-            </li>
-            <% }); %>
-        </ul>
+            </span>
+            <a href="/todo/delete/<%= index %>">✘</a>
+        </li>
+        <% }); %>
+    </ul>
 
-        <form action="/todo/add/" method="post">
-            <p>
-                <label for="newtodo">What shoud I do?</label>
-                <input type="text" name="newtodo" id="newtodo" autofocus />
-                <input type="submit" value="Add" />
-            </p>
-        </form>
-    </body>
+    <form action="/todo/add/" method="post">
+        <p>
+            <label for="newtodo">What should I do next?</label>
+            <input type="text" name="newtodo" id="newtodo" placeholder="Enter task here..." required />
+            <input type="submit" value="Add Task" />
+        </p>
+    </form>
+</body>
 
 </html>
+
