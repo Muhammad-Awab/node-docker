@@ -1,0 +1,26 @@
+name: Deploy to EC2
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy-job:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          echo -e "StrictHostKeyChecking no\n" >> ~/.ssh/config
+
+      - name: Deploy to EC2
+        run: |
+          scp -o StrictHostKeyChecking=no -r . $EC2_INSTANCE_USER@$EC2_INSTANCE_IP:/home/ubuntu/
+          ssh -o StrictHostKeyChecking=no $EC2_INSTANCE_USER@$EC2_INSTANCE_IP 'cd /home/ubuntu/node-todo-cicd_Jenkins_Docker && npm install && pm2 delete my-app || true && pm2 start npm --name "app.js" -- start'
